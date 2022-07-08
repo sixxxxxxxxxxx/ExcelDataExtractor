@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDataExtractor", "ExcelDataExtractor\ExcelDataExtractor.csproj", "{7055DEFF-793B-4E2A-8FA2-954003F3774F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7055DEFF-793B-4E2A-8FA2-954003F3774F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7055DEFF-793B-4E2A-8FA2-954003F3774F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7055DEFF-793B-4E2A-8FA2-954003F3774F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7055DEFF-793B-4E2A-8FA2-954003F3774F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {271CC1DC-6572-4B06-A59E-890D1CE2EA2C}
+	EndGlobalSection
+EndGlobal

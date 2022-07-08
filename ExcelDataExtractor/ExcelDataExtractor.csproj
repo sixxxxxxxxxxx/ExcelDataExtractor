@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>ExcelDataExtractor</PackageId>
+    <Authors>Ugochukwu Udeh, Chidiebube Onah</Authors>
+    <Description>A nuget package used for reading from and writing to excels</Description>
+    <PackageTags>Excel</PackageTags>
+    <PackageProjectUrl>https://github.com/Sixxxxx/ExcelDataExtractor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Sixxxxx/ExcelDataExtractor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+ 
+</Project>
