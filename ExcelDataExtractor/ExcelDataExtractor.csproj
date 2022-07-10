@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>ExcelDataExtractor</PackageId>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Ugochukwu Udeh, Chidiebube Onah</Authors>
     <Description>A nuget package used for reading from and writing to excels</Description>
     <PackageTags>Excel</PackageTags>
