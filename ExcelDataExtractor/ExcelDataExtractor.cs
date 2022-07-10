@@ -3,7 +3,7 @@ using OfficeOpenXml;
 
 namespace ExcelDataExtractor
 {
-    public static class ExcelDataExtractor
+    public static class Excel
     {
         public static IEnumerable<T> ReadFromExcel<T>(IFormFile excelFile, string[]? requiredHeaders, string[]? nullableFields, string[]? ignoreFields, string duplicateComparer) where T : new()
         {
