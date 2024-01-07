@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using System.Text;
 
 namespace ExcelDataExtractor
 {
@@ -77,8 +78,57 @@ namespace ExcelDataExtractor
 
                 excelData.Add(cell);
             }
+           
             ep.Save();
             return excelData;
+        }
+
+        public static (List<Dictionary<string, string>> data, string errMSg) Distinct(
+            this List<Dictionary<string, string>> source, string[]? columns)
+        {
+            StringBuilder sb = new StringBuilder();
+            List<Dictionary<string, string>> listWithoutDuplicates = new List<Dictionary<string, string>>();
+
+            if (columns == null) return (source, string.Empty);
+
+            foreach (string column in columns)
+            {
+                listWithoutDuplicates = new List<Dictionary<string, string>>();
+
+                StringBuilder msgBuilder = new StringBuilder();
+
+
+                foreach (Dictionary<string, string> item in source)
+                {
+                    var columnValue = item.TryGetValue(column, out var value) ? value : null;
+
+                    if (listWithoutDuplicates.Any(i => i.TryGetValue(column, out var existingValue) && existingValue == columnValue))
+                    {
+
+                        Dictionary<string, string> itemToRemove = listWithoutDuplicates.SingleOrDefault(l => l.ContainsValue(item[column]));
+
+                        int indexOfItemToRemove = listWithoutDuplicates.IndexOf(itemToRemove);
+
+                        listWithoutDuplicates.RemoveAt(indexOfItemToRemove);
+                        msgBuilder.AppendLine(item[column]);
+                        continue;
+                    }
+
+                    if (!listWithoutDuplicates.Contains(item) && item.ContainsKey(column)) listWithoutDuplicates.Add(item);
+                }
+
+                source = listWithoutDuplicates.ToList();
+
+                string duplicateRecordsErrorMsg = string.IsNullOrEmpty(msgBuilder.ToString())
+                    ? string.Empty
+                    : msgBuilder.Insert(0,
+                            $"The following '{column}' values are duplicates and not uploaded !\nReview them and re-upload !\n")
+                        .ToString();
+
+                if (!string.IsNullOrEmpty(duplicateRecordsErrorMsg)) sb.AppendLine(duplicateRecordsErrorMsg);
+            }
+
+            return (listWithoutDuplicates, sb.ToString());
         }
 
         public static void Validate(this ExcelWorksheet worksheet, string[] fields, int columnCount)

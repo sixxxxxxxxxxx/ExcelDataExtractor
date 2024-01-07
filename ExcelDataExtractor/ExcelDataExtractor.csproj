@@ -5,16 +5,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>ExcelDataExtractor</PackageId>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Authors>Ugochukwu Udeh, Chidiebube Onah</Authors>
     <Description>A nuget package used for reading from and writing to excels</Description>
-    <PackageTags>Excel</PackageTags>
+    <PackageTags>Excel, upload, download</PackageTags>
     <PackageProjectUrl>https://github.com/Sixxxxx/ExcelDataExtractor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Sixxxxx/ExcelDataExtractor</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>ExcelDataExtractor</Title>
+    <PackageIcon>excel.jpg</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\excel.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.0.4" />

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExcelDataExtractor.Dtos.Responses;
+using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 namespace ExcelDataExtractor
 {
     public static class Excel
     {
-        public static IEnumerable<T> ReadFromExcel<T>(IFormFile excelFile, string[]? requiredHeaders, string[]? nullableFields, string[]? ignoreFields, string duplicateComparer) where T : new()
+        public static ExcelReadResponse<T> ReadFromExcel<T>(IFormFile excelFile, string[]? requiredHeaders, string[]? nullableFields, string[]? ignoreFields, string duplicateComparer, string[]? uniqueColumns) where T : new()
         {
             List<Dictionary<string, string>> excelData = ExcelDataExtractorExtension.ExtractFromExcel(excelFile, nullableFields, ignoreFields);
 
@@ -13,14 +14,13 @@ namespace ExcelDataExtractor
             {
                 excelData.ValidateFields(requiredHeaders);
             }
+            (List<Dictionary<string, string>> data, string distictErrMSg) = excelData.Distinct(uniqueColumns);
             
-            excelData.CheckDuplicate(duplicateComparer);
-
             IEnumerable<T> recordsToUpload = DictionaryToObjectConverterExtension.DictionaryToObjects<T>(excelData);
-            return recordsToUpload;
+            return new ExcelReadResponse<T>(recordsToUpload, distictErrMSg);           
         }
 
-        public static MemoryStream WriteToExcel<T>(this IList<T> collection, string worksheetName, int[] unlockedColumns, int[] hiddenColumns)
+        public static ExcelWriteResponse WriteToExcel<T>(this IList<T> collection, string worksheetName, int[] unlockedColumns, int[] hiddenColumns)
         {
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -31,7 +31,7 @@ namespace ExcelDataExtractor
                 worksheet.Cells.LoadFromCollection(collection, true);
 
                 worksheet.Protection.IsProtected = true;
-
+                worksheet.Protection.SetPassword("Danfodio2!");
                 if (unlockedColumns != null && unlockedColumns.Any())
                 {
                     foreach (var column in unlockedColumns)
@@ -48,7 +48,9 @@ namespace ExcelDataExtractor
                 ep.Save();
             }
             stream.Position = 0;
-            return stream;
+            var fileName = $"{worksheetName}-{DateTime.Now:yyyyMMddHHmmssfff}.xlsx";
+
+            return new ExcelWriteResponse { ExcelStream = stream, ExcelName = fileName };
         }
     }
 }
