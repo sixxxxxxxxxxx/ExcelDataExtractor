@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ExcelDataExtractor
@@ -21,9 +25,9 @@ namespace ExcelDataExtractor
                 throw new InvalidDataException("Incorrect file format");
             }
 
-            List<Dictionary<string, string>> excelData = new();
+            List<Dictionary<string, string>> excelData = new List<Dictionary<string, string>>();
 
-            List<string> possibleEmptyFields = new();
+            List<string> possibleEmptyFields = new List<string>();
 
 
             if (nullableFields != null)
@@ -32,9 +36,9 @@ namespace ExcelDataExtractor
             possibleEmptyFields = possibleEmptyFields.Select(c => c.ToLower()).ToList();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using MemoryStream stream = new();
+            using MemoryStream stream = new MemoryStream();
             file.CopyTo(stream);
-            using ExcelPackage ep = new(stream);
+            using ExcelPackage ep = new ExcelPackage(stream);
             ExcelWorksheet worksheet = ep.Workbook.Worksheets.First();
             int rowCount = worksheet.Dimension.Rows;
             int columnCount = worksheet.Dimension.Columns;
@@ -50,7 +54,7 @@ namespace ExcelDataExtractor
 
             for (int row = contentRow; row <= rowCount; row++)
             {
-                Dictionary<string, string> cell = new();
+                Dictionary<string, string> cell = new Dictionary<string, string>();
                 for (int column = 1; column <= columnCount; column++)
                 {
                     string headerCell = worksheet.Cells[headerRow, column].Value.ToString();
