@@ -1,4 +1,7 @@
-﻿namespace ExcelDataExtractor.Dtos.Responses
+﻿using System.Collections.Generic;
+using System.IO;
+
+namespace ExcelDataExtractor.Dtos.Responses
 {
     public class ExcelReadResponse<T>
     {

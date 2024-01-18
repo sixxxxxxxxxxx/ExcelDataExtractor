@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace ExcelDataExtractor
 {
@@ -32,7 +35,7 @@ namespace ExcelDataExtractor
 
         public static IEnumerable<T> DictionaryToObjects<T>(List<Dictionary<string, string>> dictItems) where T : new()
         {
-            List<T> item = new(dictItems.Count);
+            List<T> item = new List<T>(dictItems.Count);
             item.AddRange(dictItems.Select(c => DictionaryToObject<T>(c)).ToList());
             return item;
         }
